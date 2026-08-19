@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STAT-2207 &middot; Formula Page</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --paper:#f3ead9;
+  --paper2:#ece0c9;
+  --ink:#3a2e22;
+  --ink-soft:#6b5c48;
+  --line:#d8c9a8;
+  --rust:#a13d2c;
+  --rust-d:#7e2f21;
+  --brass:#8a6a2d;
+  --cream:#fbf6ea;
+  --shadow:0 4px 14px rgba(58,46,34,.12);
+  --shadow-lg:0 10px 28px rgba(58,46,34,.16);
+  --accent-soft:#f0dcd2;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;font-size:1rem;}
+body{
+  font-family:'Source Serif 4',Georgia,serif;
+  background:
+    radial-gradient(1000px 500px at 15% 0%, rgba(161,61,44,.06), transparent 60%),
+    radial-gradient(900px 500px at 100% 10%, rgba(138,106,45,.08), transparent 60%),
+    var(--paper);
+  color:var(--ink);line-height:1.6;min-height:100vh;background-attachment:fixed;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(58,46,34,.015) 0px, transparent 1px, transparent 2px),
+    repeating-linear-gradient(90deg, rgba(58,46,34,.012) 0px, transparent 1px, transparent 2px);
+}
+
+/* ---------- TOPBAR ---------- */
+.topbar{
+  position:relative;padding:30px 24px 22px;text-align:left;
+  background:linear-gradient(180deg, #2c211a 0%, #3a2a1f 100%);
+  color:var(--cream);border-bottom:6px solid var(--rust);
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.topbar-inner{max-width:960px;margin:0 auto;}
+.topbar h1{margin:0 0 6px;font-size:1.85rem;letter-spacing:.01em;font-family:'Playfair Display',serif;font-weight:700;color:#f5e9d3;line-height:1.2;}
+.topbar h1 em{color:var(--rust);font-style:normal;border-bottom:3px solid var(--rust);}
+.topbar p{margin:4px 0 0;color:#c9b494;font-family:'Source Serif 4',serif;font-size:.95rem;font-style:italic;}
+.topbar .badge-mini{
+  display:inline-block;background:rgba(245,233,211,.07);
+  border:1px solid rgba(245,233,211,.22);color:#e6d7b8;
+  font-family:'JetBrains Mono',monospace;font-weight:500;font-size:.76rem;
+  padding:7px 14px;border-radius:3px;letter-spacing:.06em;
+}
+
+.wrap{max-width:960px;margin:0 auto;padding:30px 18px 80px;position:relative;z-index:1;}
+
+/* ---------- NAV ---------- */
+.nav{
+  display:flex;flex-wrap:wrap;gap:6px;justify-content:center;
+  margin:0 0 28px;font-family:'JetBrains Mono',monospace;
+  padding:10px;background:var(--cream);border-radius:4px;
+  border:1px solid var(--line);box-shadow:var(--shadow);
+}
+.nav a{
+  background:var(--cream);border:1px solid var(--line);color:var(--ink-soft);
+  text-decoration:none;font-size:.78rem;font-weight:600;
+  padding:7px 13px;border-radius:3px;transition:.18s;
+}
+.nav a:hover{background:var(--rust-d);color:var(--cream);border-color:var(--rust-d);transform:translateY(-1px);}
+.nav a.nav-special{background:var(--rust);color:#fbf1e6;border-color:var(--rust);}
+.nav a.nav-special:hover{background:var(--rust-d);color:#fbf1e6;border-color:var(--rust-d);}
+.nav a.nav-formula{background:var(--brass);color:var(--cream);border-color:var(--brass);}
+.nav a.nav-formula:hover{background:#6c501f;color:var(--cream);border-color:#6c501f;}
+
+/* ---------- SET CARD ---------- */
+.set-card{
+  background:var(--cream);
+  border-radius:4px;box-shadow:var(--shadow-lg);
+  margin-bottom:30px;overflow:hidden;
+  border:1px solid var(--line);
+  border-left:5px solid var(--rust);
+  position:relative;
+}
+.set-card::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+  background:var(--rust);pointer-events:none;
+}
+.set-head{
+  background:var(--paper2);
+  color:var(--ink);padding:18px 26px;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  border-bottom:1px solid var(--line);
+}
+.set-head h2{margin:0;font-size:1.32rem;font-family:'Playfair Display',serif;font-weight:700;color:var(--ink);}
+.set-head h2 em{color:var(--rust-d);font-style:italic;border-bottom:2px solid var(--rust);}
+.set-head .marks{
+  font-family:'JetBrains Mono',monospace;color:var(--ink-soft);font-size:.78rem;
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.set-head .marks .chip{background:#f3ddd4;color:var(--rust-d);border:1px solid #e0b6a6;padding:5px 11px;border-radius:3px;font-weight:600;}
+.set-body{padding:8px 26px 22px;}
+
+/* ---------- QUESTION BLOCK ---------- */
+.q-block{border-bottom:1px dashed var(--line);padding:22px 0;}
+.q-block:last-child{border-bottom:none;}
+.q-title{font-size:1.08rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;margin-bottom:10px;flex-wrap:wrap;
+  background:var(--paper2);
+  padding:14px 20px;font-family:'Playfair Display',serif;
+  font-weight:700;color:var(--ink);font-size:1.02rem;
+  border:1px solid var(--line);border-radius:3px;
+}
+.q-title .qn{font-size:1.08rem;
+  display:flex;align-items:center;
+  font-family:'Playfair Display',serif;font-weight:700;color:var(--ink);font-size:1.02rem;
+  flex:1;min-width:200px;
+}
+.q-title .qn .qnum{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:2px;background:var(--brass);color:var(--cream);
+  font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:700;
+  margin-right:10px;flex:0 0 auto;
+}
+.q-title .chip{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  color:var(--rust-d);border:1.5px solid var(--rust-d);
+  padding:3px 10px;border-radius:3px;margin-left:10px;font-weight:600;
+  background:transparent;
+}
+
+/* ---------- QUESTION TEXT ---------- */
+.qtext p{margin:.6em 0;line-height:1.78;color:var(--ink);font-size:1.02rem;}
+.qtext table.datatab{border-collapse:collapse;margin:12px 0;font-family:'JetBrains Mono',monospace;font-size:.84rem;width:100%;background:var(--cream);}
+.qtext table.datatab th,.qtext table.datatab td{border:1px solid var(--line);padding:7px 12px;text-align:center;}
+.qtext table.datatab th{background:#e8dcc2;color:var(--rust-d);font-weight:700;}
+.qtext .dataline{
+  background:var(--paper);border-left:3px solid var(--brass);
+  padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:.88rem;
+  border-radius:0 3px 3px 0;
+}
+.qtext code{background:var(--paper2);padding:2px 6px;border-radius:3px;font-size:.84rem;color:var(--rust-d);font-family:'JetBrains Mono',monospace;border:1px solid var(--line);}
+
+/* ---------- ANSWER TOGGLE ---------- */
+.ans-toggle{
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.8rem;
+  color:var(--rust-d);background:transparent;border:1.5px solid var(--rust-d);
+  padding:10px 18px;border-radius:3px;cursor:pointer;
+  letter-spacing:.02em;transition:.18s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.ans-toggle::after{content:"\25BE";transition:.2s;font-size:.75rem;}
+.ans-toggle:hover{background:var(--rust-d);color:var(--cream);}
+.ans-toggle.open{background:var(--rust-d);color:var(--cream);}
+.ans-toggle.open::after{transform:rotate(180deg);}
+.ans-toggle.open:hover{background:var(--rust);border-color:var(--rust);}
+.ans-block{display:none;}
+
+/* ---------- SLIDE-IN ANSWER PANEL ---------- */
+.slide-stage{
+  position:relative;
+  perspective:1400px;
+  perspective-origin:30% 50%;
+  overflow-x:visible;
+}
+.slide-stage.is-open .q-panel{
+  position:fixed;
+  top:0;left:0;
+  width:50%;
+  height:100vh;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:24px 30px 60px;
+  box-sizing:border-box;
+  background:var(--paper);
+  z-index:80;
+  pointer-events:auto;
+}
+.q-panel{
+  width:100%;
+  transform-origin:left center;
+  transition:transform .5s cubic-bezier(.22,.9,.32,1);
+  will-change:transform;
+}
+.answer-panel{
+  position:fixed;
+  top:0;right:0;
+  width:50%;
+  max-width:none;
+  height:100vh;
+  overflow:hidden;
+  background:var(--cream);
+  border-left:6px solid var(--rust);
+  box-shadow:-20px 0 60px rgba(28,18,12,.32);
+  z-index:90;
+  transform:translateX(100%);
+  transition:transform .5s cubic-bezier(.22,.9,.32,1);
+  display:flex;flex-direction:column;
+}
+.answer-panel.show{transform:translateX(0);}
+.answer-panel::before{
+  content:"";
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:6px;
+  background:linear-gradient(180deg, var(--rust) 0%, var(--brass) 100%);
+}
+.ap-head{
+  background:linear-gradient(180deg, #2c211a 0%, #3a2a1f 100%);
+  color:var(--cream);
+  padding:16px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:'JetBrains Mono',monospace;
+  border-bottom:4px solid var(--rust);
+  flex:0 0 auto;
+}
+.ap-head .ap-title{
+  font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;
+}
+.ap-head .ap-title em{color:var(--rust);font-style:italic;border-bottom:2px solid var(--rust);}
+.ap-tag{
+  font-size:.7rem;background:rgba(245,233,211,.12);
+  padding:3px 10px;border-radius:3px;margin-left:10px;
+  border:1px solid rgba(245,233,211,.18);font-weight:600;
+}
+.ap-close{
+  background:rgba(245,233,211,.12);color:var(--cream);
+  border:1px solid rgba(245,233,211,.22);
+  width:34px;height:34px;border-radius:50%;
+  font-size:1.1rem;cursor:pointer;line-height:1;transition:.15s;
+  font-family:'JetBrains Mono',monospace;font-weight:700;
+}
+.ap-close:hover{background:rgba(245,233,211,.28);}
+.ap-body{
+  flex:1 1 auto;overflow-y:auto;
+  padding:18px 28px 28px;
+  background:var(--paper);
+}
+.ap-body .ans-block{display:block;background:transparent;border:none;padding:0;margin:0;}
+.ap-body .ans-part{padding:14px 0;border-top:1px dashed var(--line);font-size:1.02rem;line-height:1.85;color:var(--ink);}
+.ap-body .ans-part:first-child{border-top:none;}
+.ap-body .ans-tag{
+  font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--rust-d);
+  margin-right:8px;font-size:1rem;letter-spacing:.04em;
+}
+.ap-body .ans-part p{margin:.55em 0;}
+.ap-body .ans-part b{color:var(--rust-d);}
+.ap-body .ans-part table.datatab{margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:.86rem;background:var(--cream);}
+.ap-body .ans-part table.datatab th{background:#e8dcc2;}
+.ap-foot{
+  padding:10px 22px 14px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--paper2);border-top:1px solid var(--line);
+  font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink-soft);
+  flex:0 0 auto;
+}
+.ap-foot .ap-foot-btn{
+  background:var(--rust-d);color:var(--cream);
+  border:1px solid var(--rust-d);
+  padding:8px 16px;border-radius:3px;font-weight:700;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;font-size:.8rem;
+}
+.ap-foot .ap-foot-btn:hover{background:var(--rust);border-color:var(--rust);}
+body.slide-open{}
+@media (max-width:760px){
+  .answer-panel{width:100vw;border-left-width:4px;}
+  .slide-stage.is-open .q-panel{width:0%;}
+}
+
+/* ---------- FRACTIONS ---------- */
+.frac{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px;line-height:1.1;color:var(--rust-d);}
+.frac .num{display:block;border-bottom:1.2px solid currentColor;padding:0 4px 1px;font-size:.85em;color:var(--rust-d);}
+.frac .den{display:block;padding:1px 4px 0;font-size:.85em;color:var(--rust-d);}
+
+/* ---------- FOOTER ---------- */
+.footer-note{
+  text-align:center;color:var(--ink-soft);
+  font-family:'Source Serif 4',serif;font-style:italic;
+  font-size:.88rem;margin-top:42px;padding:26px 20px;line-height:1.8;
+  background:var(--cream);border:1px solid var(--line);border-radius:4px;
+}
+.footer-note strong{color:var(--rust-d);font-style:normal;}
+
+/* ---------- SCROLL TO TOP ---------- */
+.totop{
+  position:fixed;bottom:22px;right:22px;background:var(--rust-d);color:var(--cream);
+  border:1px solid var(--rust-d);width:42px;height:42px;
+  border-radius:3px;font-size:1.1rem;cursor:pointer;
+  box-shadow:var(--shadow);display:none;z-index:60;font-family:'JetBrains Mono',monospace;
+}
+.totop:hover{background:var(--rust);border-color:var(--rust);}
+
+/* ---------- PRINT ---------- */
+@media print{
+  .ans-toggle,.nav,.totop{display:none!important;}
+  .answer-panel{display:none!important;}
+  .ans-block{display:block!important;}
+}
+
+/* ---------- FORMULA PAGE ---------- */
+#formulaPage{
+  --fp-navy:#2c211a;--fp-accent:#a13d2c;
+  --fp-soft:#f3ead9;--fp-card:#fbf6ea;--fp-border:#d8c9a8;
+  --fp-accent-soft:#f0dcd2;--fp-text:#3a2e22;--fp-muted:#6b5c48;
+}
+.fp-card{
+  background:var(--fp-card);border-radius:4px;
+  box-shadow:var(--shadow-lg);margin-bottom:30px;overflow:hidden;
+  border:1px solid var(--fp-border);border-left:5px solid var(--fp-accent);
+}
+.fp-head{
+  background:var(--fp-soft);color:var(--fp-text);
+  padding:16px 24px;display:flex;justify-content:space-between;align-items:center;
+  font-family:'JetBrains Mono',monospace;border-bottom:1px solid var(--fp-border);
+}
+.fp-head h2{margin:0;font-size:1.32rem;font-family:'Playfair Display',serif;font-weight:700;}
+.fp-head h2 em{color:var(--fp-accent);font-style:italic;border-bottom:2px solid var(--fp-accent);}
+.fp-head .marks{
+  font-family:'JetBrains Mono',monospace;color:var(--fp-muted);font-size:.78rem;
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.fp-head .marks .chip{background:#e8dcc2;color:var(--fp-accent);border:1px solid var(--fp-border);padding:5px 11px;border-radius:3px;font-weight:600;}
+.fp-body{padding:10px 24px 24px;}
+.fp-chapter{
+  background:var(--fp-soft);border:1px solid var(--fp-border);
+  border-radius:4px;padding:16px 20px;margin-bottom:20px;
+}
+.fp-chapter h3{
+  margin:0 0 12px;font-family:'Playfair Display',serif;color:var(--fp-navy);
+  font-size:1.1rem;border-bottom:2px solid var(--fp-accent);
+  padding-bottom:6px;display:flex;align-items:center;gap:10px;font-weight:700;
+}
+.fp-chapter h3 em{color:var(--fp-accent);font-style:italic;}
+.fp-chapter h3 .ch-num{
+  background:var(--fp-accent);color:#fbf1e6;
+  border-radius:2px;width:28px;height:28px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:.82rem;font-weight:700;font-family:'JetBrains Mono',monospace;
+}
+.fp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;}
+.fp-item{
+  background:var(--fp-card);border:1px solid var(--fp-border);
+  border-left:3px solid var(--fp-accent);border-radius:3px;
+  padding:10px 12px;font-size:.86rem;
+}
+.fp-item .fname{font-weight:700;color:var(--fp-navy);margin-bottom:3px;font-family:'JetBrains Mono',monospace;}
+.fp-item .fform{
+  font-family:'JetBrains Mono',monospace;background:var(--fp-soft);
+  padding:3px 6px;border-radius:3px;display:inline-block;margin:2px 0;
+  color:var(--fp-text);border:1px solid var(--fp-border);
+}
+.fp-item .fdesc{color:var(--fp-muted);font-size:.78rem;margin-top:2px;line-height:1.35;}
+.fp-toc{
+  display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;
+  padding:10px;background:var(--fp-soft);border-radius:4px;
+  border:1px solid var(--fp-border);
+}
+.fp-toc a{
+  background:var(--fp-card);border:1px solid var(--fp-border);color:var(--fp-accent);
+  text-decoration:none;font-size:.78rem;font-weight:700;
+  padding:5px 11px;border-radius:3px;font-family:'JetBrains Mono',monospace;
+  transition:.15s;
+}
+.fp-toc a:hover{background:var(--fp-accent);color:#fbf1e6;border-color:var(--fp-accent);}
+
+/* ---------- PER-SET TINT VARIANTS (subtle warm tones) ---------- */
+#set1{--rust:#a13d2c;--rust-d:#7e2f21;--brass:#8a6a2d;--accent-soft:#f0dcd2;}        /* Rust */
+#set2{--rust:#8b5a2b;--rust-d:#6b4423;--brass:#a67c52;--accent-soft:#ecdcc8;}        /* Cinnamon */
+#set3{--rust:#6f5b3e;--rust-d:#4f4129;--brass:#a8946a;--accent-soft:#e8e0cc;}        /* Olive-brown */
+#set4{--rust:#9c4221;--rust-d:#732f17;--brass:#c0873f;--accent-soft:#f4d9c1;}        /* Burnt sienna */
+#set5{--rust:#b5402e;--rust-d:#8a2e1f;--brass:#b89641;--accent-soft:#f8d8c8;}        /* Vermilion */
+#set6{--rust:#7d4f2d;--rust-d:#5a3a1f;--brass:#a8804f;--accent-soft:#ecd4b8;}        /* Walnut */
+#set7{--rust:#5e6b3a;--rust-d:#3f4a23;--brass:#a89348;--accent-soft:#e6e8c8;}        /* Moss */
+#set8{--rust:#a85a2a;--rust-d:#823f17;--brass:#c79752;--accent-soft:#f7d8b4;}        /* Amber */
+#set9{--rust:#a3435e;--rust-d:#7d2e44;--brass:#b87a52;--accent-soft:#f5d3da;}        /* Faded rose */
+#set10{--rust:#4a6470;--rust-d:#314754;--brass:#9c8550;--accent-soft:#d8e0e0;}       /* Slate-teal */
+#setM{--rust:#7e2f21;--rust-d:#5a1f15;--brass:#b8853a;--accent-soft:#ecd4b8;}        /* Deep crimson */
+
+/* Apply per-set accent to q-title chip & ans-tag via currentColor trick */
+.set-card .q-title{border-left:5px solid var(--rust);}
+.set-card .q-title .qn .qnum{background:var(--rust);}
+.set-card .q-title .chip{color:var(--rust-d);border-color:var(--rust-d);}
+.set-card .ans-toggle{color:var(--rust-d);border-color:var(--rust-d);}
+.set-card .ans-toggle:hover{background:var(--rust-d);color:var(--cream);}
+.set-card .ans-toggle.open{background:var(--rust-d);color:var(--cream);}
+.set-card .ans-toggle.open:hover{background:var(--rust);border-color:var(--rust);}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <h1>STAT&#8209;2207 &middot; <em>Formula Page</em></h1>
+    <p>Mendenhall 14th ed. &middot; Complete reference &middot; University of Dhaka, CSE</p>
+    <span class="badge-mini">Formulas &middot; Reference &middot; All Chapters</span>
+  </div>
+</div>
+<div class="wrap">
+<div class="nav">
+    <a href="STAT2207_Master_Set.html">&#9733; Master Set</a>
+    <a href="index.html">&#127968; Home</a>
+  </div>
+<section class="fp-card" id="formulaPage">
+      <div class="fp-head">
+        <h2>Formula Page &mdash; Quick Reference (Ch. 1&ndash;7 &middot; Ch. 14)</h2>
+        <span class="marks">All formulas from Mendenhall 14th ed.</span>
+      </div>
+      <div class="fp-body">
+        <div class="fp-toc">
+          <a href="#fp-ch1">Ch. 1</a><a href="#fp-ch2">Ch. 2</a><a href="#fp-ch3">Ch. 3</a><a href="#fp-ch4">Ch. 4</a><a href="#fp-ch5">Ch. 5</a><a href="#fp-ch6">Ch. 6</a><a href="#fp-ch7">Ch. 7</a><a href="#fp-ch14">Ch. 14</a>
+        </div>
+
+        <div class="fp-chapter" id="fp-ch1">
+          <h3><span class="ch-num">1</span>Describing Data with Graphs</h3>
+          <div class="fp-grid">
+            <div class="fp-item"><div class="fname">Class width</div><div class="fform">w = <span class="frac"><span class="num">(max &minus; min)</span><span class="den">k</span></span></div><div class="fdesc">k = number of classes.</div></div>
+            <div class="fp-item"><div class="fname">Class boundaries</div><div class="fform">BL = <span class="frac"><span class="num">(L<sub>k</sub> + U<sub>k&minus;1</sub>)</span><span class="den">2</span></span></div><div class="fdesc">Halfway between upper limit of one class and lower limit of next.</div></div>
+            <div class="fp-item"><div class="fname">Class midpoint</div><div class="fform">m = <span class="frac"><span class="num">(L + U)</span><span class="den">2</span></span></div><div class="fdesc">Also equals (BL + BU) / 2.</div></div>
+            <div class="fp-item"><div class="fname">Relative frequency</div><div class="fform">rf = <span class="frac"><span class="num">f</span><span class="den">n</span></span></div><div class="fdesc">Proportion of total in class.</div></div>
+            <div class="fp-item"><div class="fname">Cumulative frequency</div><div class="fform">CF<sub>k</sub> = &Sigma;<sub>i=1</sub><sup>k</sup> f<sub>i</sub></div><div class="fdesc">Running total up to class k.</div></div>
+            <div class="fp-item"><div class="fname">Grouped mean</div><div class="fform">&#772;x = &Sigma;f&middot;m / &Sigma;f</div><div class="fdesc">Approximation using class midpoints.</div></div>
+            <div class="fp-item"><div class="fname">Number of classes (Sturges)</div><div class="fform">k &asymp; log<sub>2</sub>(n) + 1</div><div class="fdesc">Rule-of-thumb for sizing classes.</div></div>
+            <div class="fp-item"><div class="fname">Percentile from ogive</div><div class="fform">P<sub>p</sub> = value at (<span class="frac"><span class="num">p</span><span class="den">100</span></span>)(n+0.5)</div><div class="fdesc">Read horizontally from cumulative curve.</div></div>
+          </div>
+        </div>
+
+        <div class="fp-chapter" id="fp-ch2">
+          <h3><span class="ch-num">2</span>Numerical Measures</h3>
+          <div class="fp-grid">
+            <div class="fp-item"><div class="fname">Sample mean</div><div class="fform">&#772;x = &Sigma;<span class="frac"><span class="num">x</span><span class="den">n</span></span></div><div class="fdesc">Arithmetic average.</div></div>
+            <div class="fp-item"><div class="fname">Population mean</div><div class="fform">&mu; = &Sigma;<span class="frac"><span class="num">x</span><span class="den">N</span></span></div><div class="fdesc">When N is the entire population.</div></div>
+            <div class="fp-item"><div class="fname">Weighted mean</div><div class="fform">&#772;x<sub>w</sub> = &Sigma;w<sub>i</sub>x<sub>i</sub> / &Sigma;w<sub>i</sub></div><div class="fdesc">Each value weighted by w.</div></div>
+            <div class="fp-item"><div class="fname">Median</div><div class="fform">Odd n: middle value;  Even n: avg of two middles</div><div class="fdesc">Position: (n+1)/2.</div></div>
+            <div class="fp-item"><div class="fname">Mode</div><div class="fform">Most frequent value</div><div class="fdesc">May be 0, 1, or many.</div></div>
+            <div class="fp-item"><div class="fname">Trimmed mean</div><div class="fform">Drop p% lowest &amp; p% highest, average rest</div><div class="fdesc">Resistant to outliers.</div></div>
+            <div class="fp-item"><div class="fname">Range</div><div class="fform">R = max &minus; min</div><div class="fdesc">Simplest spread measure.</div></div>
+            <div class="fp-item"><div class="fname">Sample variance</div><div class="fform">s&sup2; = &Sigma;(x&minus;&#772;x)&sup2; / (n&minus;1)</div><div class="fdesc">n&minus;1 (Bessel's correction).</div></div>
+            <div class="fp-item"><div class="fname">Population variance</div><div class="fform">&sigma;&sup2; = &Sigma;(x&minus;&mu;)&sup2; / N</div><div class="fdesc">Divisor is N.</div></div>
+            <div class="fp-item"><div class="fname">Sample SD</div><div class="fform">s = &radic;s&sup2;</div><div class="fdesc">Same units as data.</div></div>
+            <div class="fp-item"><div class="fname">CV</div><div class="fform">CV = (s / &#772;x) &times; 100%</div><div class="fdesc">Relative variability, unit-free.</div></div>
+            <div class="fp-item"><div class="fname">Quartiles (exclusive)</div><div class="fform">Q1 position = <span class="frac"><span class="num">(n+1)</span><span class="den">4</span></span>;  Q3 = 3<span class="frac"><span class="num">(n+1)</span><span class="den">4</span></span></div><div class="fdesc">Lower and upper quartile.</div></div>
+            <div class="fp-item"><div class="fname">IQR</div><div class="fform">IQR = Q3 &minus; Q1</div><div class="fdesc">Middle 50% spread.</div></div>
+            <div class="fp-item"><div class="fname">Outlier fences</div><div class="fform">Lower: Q1 &minus; 1.5&middot;IQR;  Upper: Q3 + 1.5&middot;IQR</div><div class="fdesc">1.5&nbsp;&times;&nbsp;IQR rule.</div></div>
+            <div class="fp-item"><div class="fname">Percentile (p-th)</div><div class="fform">Position L<sub>p</sub> = (<span class="frac"><span class="num">p</span><span class="den">100</span></span>)(n+1)</div><div class="fdesc">Interpolate if non-integer.</div></div>
+            <div class="fp-item"><div class="fname">Chebyshev</div><div class="fform">&ge; (1 &minus; 1/k&sup2;) within k SDs of mean</div><div class="fdesc">Any distribution. Looser bound.</div></div>
+            <div class="fp-item"><div class="fname">Empirical Rule</div><div class="fform">~68% / 95% / 99.7% within 1/<span class="frac"><span class="num">2</span><span class="den">3 SD</span></span></div><div class="fdesc">For approximately bell-shaped only.</div></div>
+            <div class="fp-item"><div class="fname">Five-number summary</div><div class="fform">{Min, Q1, Median, Q3, Max}</div><div class="fdesc">Basis of box plot.</div></div>
+          </div>
+        </div>
+
+        <div class="fp-chapter" id="fp-ch3">
+          <h3><span class="ch-num">3</span>Bivariate Data</h3>
+          <div class="fp-grid">
+            <div class="fp-item"><div class="fname">S<sub>xy</sub></div><div class="fform">S<sub>xy</sub> = &Sigma;xy &minus; n&#772;x&#772;y</div><div class="fdesc">Cross-product sum of squares.</div></div>
+            <div class="fp-item"><div class="fname">S<sub>xx</sub></div><div class="fform">S<sub>xx</sub> = &Sigma;x&sup2; &minus; n&#772;x&sup2;</div><div class="fdesc">x sum of squares.</div></div>
+            <div class="fp-item"><div class="fname">S<sub>yy</sub></div><div class="fform">S<sub>yy</sub> = &Sigma;y&sup2; &minus; n&#772;y&sup2;</div><div class="fdesc">y sum of squares.</div></div>
+            <div class="fp-item"><div class="fname">Pearson r</div><div class="fform">r = S<sub>xy</sub> / &radic;(S<sub>xx</sub> &middot; S<sub>yy</sub>)</div><div class="fdesc">&minus;1 &le; r &le; +1.</div></div>
+            <div class="fp-item"><div class="fname">Slope b<sub>1</sub></div><div class="fform">b<sub>1</sub> = S<span class="frac"><span class="num">S<sub>xy</sub></span><span class="den">S<sub>xx</sub></span></span></div><div class="fdesc">Change in y per unit x.</div></div>
+            <div class="fp-item"><div class="fname">Intercept b<sub>0</sub></div><div class="fform">b<sub>0</sub> = &#772;y &minus; b<sub>1</sub>&#772;x</div><div class="fdesc">Line passes through (&#772;x,&#772;y).</div></div>
+            <div class="fp-item"><div class="fname">R&sup2;</div><div class="fform">R&sup2; = (S<sub>xy</sub>)&sup2; / (S<sub>xx</sub> &middot; S<sub>yy</sub>)</div><div class="fdesc">Fraction of y's variation explained by x.</div></div>
+            <div class="fp-item"><div class="fname">Residual</div><div class="fform">e = y &minus; &#375;</div><div class="fdesc">&Sigma;e = 0 by least-squares property.</div></div>
+            <div class="fp-item"><div class="fname">Predicted &#375;</div><div class="fform">&#375; = b<sub>0</sub> + b<sub>1</sub>x</div><div class="fdesc">Reliable only within observed x-range.</div></div>
+          </div>
+        </div>
+
+        <div class="fp-chapter" id="fp-ch4">
+          <h3><span class="ch-num">4</span>Probability &amp; Distributions</h3>
+          <div class="fp-grid">
+            <div class="fp-item"><div class="fname">Sample space</div><div class="fform">S = {all outcomes}</div><div class="fdesc">P(S) = 1.</div></div>
+            <div class="fp-item"><div class="fname">Complement</div><div class="fform">P(A') = 1 &minus; P(A)</div><div class="fdesc">Probability of "not A".</div></div>
+            <div class="fp-item"><div class="fname">Addition rule</div><div class="fform">P(A&cup;B) = P(A) + P(B) &minus; P(A&cap;B)</div><div class="fdesc">If mutually exclusive: P(A&cup;B) = P(A)+P(B).</div></div>
+            <div class="fp-item"><div class="fname">Multiplication rule</div><div class="fform">P(A&cap;B) = P(A) &middot; P(B|A)</div><div class="fdesc">If independent: P(A&cap;B) = P(A)P(B).</div></div>
+            <div class="fp-item"><div class="fname">Conditional probability</div><div class="fform">P(A|B) = P(A&cap;B) / P(B)</div><div class="fdesc">Probability of A given B occurred.</div></div>
+            <div class="fp-item"><div class="fname">Bayes' theorem</div><div class="fform">P(B<sub>i</sub>|A) = P(B<sub>i</sub>)P(A|B<sub>i</sub>) / &Sigma;P(B<sub>j</sub>)P(A|B<sub>j</sub>)</div><div class="fdesc">Updates prior with evidence.</div></div>
+            <div class="fp-item"><div class="fname">Multiplication (counting)</div><div class="fform">n<sub>1</sub> &times; n<sub>2</sub> &times; &hellip; &times; n<sub>k</sub></div><div class="fdesc">Independent choices.</div></div>
+            <div class="fp-item"><div class="fname">Permutation P(n,r)</div><div class="fform">n! / (n&minus;r)!</div><div class="fdesc">Order matters, no repeats.</div></div>
+            <div class="fp-item"><div class="fname">Combination C(n,r)</div><div class="fform">n! / [r!(n&minus;r)!]</div><div class="fdesc">Order doesn't matter.</div></div>
+            <div class="fp-item"><div class="fname">E(X)</div><div class="fform">&Sigma;x &middot; P(x)</div><div class="fdesc">Long-run average.</div></div>
+            <div class="fp-item"><div class="fname">E(X&sup2;)</div><div class="fform">&Sigma;x&sup2; &middot; P(x)</div><div class="fdesc">Used for variance.</div></div>
+            <div class="fp-item"><div class="fname">Var(X)</div><div class="fform">E(X&sup2;) &minus; [E(X)]&sup2;</div><div class="fdesc">Always non-negative.</div></div>
+            <div class="fp-item"><div class="fname">SD(X)</div><div class="fform">&radic;Var(X)</div><div class="fdesc">Same units as X.</div></div>
+            <div class="fp-item"><div class="fname">Fair price</div><div class="fform">c = E(X) when win = profit</div><div class="fdesc">E(X) = 0 at fair price.</div></div>
+          </div>
+        </div>
+
+        <div class="fp-chapter" id="fp-ch5">
+          <h3><span class="ch-num">5</span>Discrete Distributions</h3>
+          <div class="fp-grid">
+            <div class="fp-item"><div class="fname">Binomial setup</div><div class="fform">n trials, p = P(success), independent</div><div class="fdesc">X = # successes.</div></div>
+            <div class="fp-item"><div class="fname">Binomial P(X=k)</div><div class="fform">C(n,k) p<sup>k</sup> (1&minus;p)<sup>n&minus;k</sup></div><div class="fdesc">k = 0, 1, &hellip;, n.</div></div>
+            <div class="fp-item"><div class="fname">Binomial mean</div><div class="fform">&mu; = np</div><div class="fdesc">Expected count.</div></div>
+            <div class="fp-item"><div class="fname">Binomial variance</div><div class="fform">&sigma;&sup2; = np(1&minus;p)</div><div class="fdesc">SD = &radic;np(1&minus;p).</div></div>
+            <div class="fp-item"><div class="fname">Binomial CDF</div><div class="fform">P(X &le; k) = &Sigma;<sub>i=0</sub><sup>k</sup> P(X=i)</div><div class="fdesc">Use tables or summation.</div></div>
+            <div class="fp-item"><div class="fname">Poisson setup</div><div class="fform">X ~ Poisson(&lambda;), &lambda; = avg rate</div><div class="fdesc">Events in fixed interval.</div></div>
+            <div class="fp-item"><div class="fname">Poisson P(X=k)</div><div class="fform">e<sup>&minus;&lambda;</sup> &lambda;<sup>k</sup> / k!</div><div class="fdesc">k = 0, 1, 2, &hellip;</div></div>
+            <div class="fp-item"><div class="fname">Poisson mean/var</div><div class="fform">&mu; = &sigma;&sup2; = &lambda;</div><div class="fdesc">Unique property.</div></div>
+            <div class="fp-item"><div class="fname">Poisson as Binomial limit</div><div class="fform">&lambda; = np, n&rarr;&infin;, p&rarr;0</div><div class="fdesc">Use when n large, p small.</div></div>
+            <div class="fp-item"><div class="fname">Hypergeometric setup</div><div class="fform">N pop, K successes, n drawn without replacement</div><div class="fdesc">X = # successes in sample.</div></div>
+            <div class="fp-item"><div class="fname">Hypergeometric P(X=k)</div><div class="fform">[C(K,k) &middot; C(N&minus;K, n&minus;k)] / C(N, n)</div><div class="fdesc">k = max(0, n&minus;N+K) to min(n, K).</div></div>
+            <div class="fp-item"><div class="fname">Hypergeometric mean</div><div class="fform">&mu; = <span class="frac"><span class="num">nK</span><span class="den">N</span></span></div><div class="fdesc">Same as binomial mean.</div></div>
+            <div class="fp-item"><div class="fname">Hypergeometric variance</div><div class="fform">n &middot; (K/N) &middot; (1&minus;K/N) &middot; (N&minus;n)/(N&minus;1)</div><div class="fdesc">FPC factor adjusts for no replacement.</div></div>
+            <div class="fp-item"><div class="fname">Geometric P(X=k)</div><div class="fform">(1&minus;p)<sup>k&minus;1</sup> p</div><div class="fdesc">First success on trial k.</div></div>
+            <div class="fp-item"><div class="fname">Negative binomial</div><div class="fform">C(k&minus;1, r&minus;1) p<sup>r</sup> (1&minus;p)<sup>k&minus;r</sup></div><div class="fdesc">r-th success on trial k.</div></div>
+          </div>
+        </div>
+
+        <div class="fp-chapter" id="fp-ch6">
+          <h3><span class="ch-num">6</span>The Normal Distribution</h3>
+          <div class="fp-grid">
+            <div class="fp-item"><div class="fname">PDF</div><div class="fform">f(x) = &Phi;(x) = (<span class="frac"><span class="num">1</span><span class="den">(&sigma;&radic;2&pi;)</span></span>) e<sup>&minus;(x&minus;&mu;)&sup2;/(2&sigma;&sup2;)</sup></div><div class="fdesc">Bell curve, symmetric about &mu;.</div></div>
+            <div class="fp-item"><div class="fname">Z-score</div><div class="fform">z = <span class="frac"><span class="num">(x &minus; &mu;)</span><span class="den">&sigma;</span></span></div><div class="fdesc">Standardize to N(0,1).</div></div>
+            <div class="fp-item"><div class="fname">P(X &lt; x)</div><div class="fform">= &Phi;(z) = P(Z &lt; z)</div><div class="fdesc">From standard normal table.</div></div>
+            <div class="fp-item"><div class="fname">P(a &lt; X &lt; b)</div><div class="fform">&Phi;(z<sub>b</sub>) &minus; &Phi;(z<sub>a</sub>)</div><div class="fdesc">Use two z-scores.</div></div>
+            <div class="fp-item"><div class="fname">P(X &gt; x)</div><div class="fform">1 &minus; &Phi;(z)</div><div class="fdesc">Right-tail probability.</div></div>
+            <div class="fp-item"><div class="fname">Inverse normal</div><div class="fform">x = &mu; + z &middot; &sigma;, z = &Phi;<sup>&minus;1</sup>(p)</div><div class="fdesc">Find x for given percentile.</div></div>
+            <div class="fp-item"><div class="fname">Central 90% interval</div><div class="fform">&mu; &plusmn; 1.645 &sigma;</div><div class="fdesc">5% in each tail.</div></div>
+            <div class="fp-item"><div class="fname">Central 95% interval</div><div class="fform">&mu; &plusmn; 1.96 &sigma;</div><div class="fdesc">2.5% in each tail.</div></div>
+            <div class="fp-item"><div class="fname">Central 99% interval</div><div class="fform">&mu; &plusmn; 2.576 &sigma;</div><div class="fdesc">0.5% in each tail.</div></div>
+            <div class="fp-item"><div class="fname">Normal approx to binomial</div><div class="fform">&mu; = np, &sigma; = &radic;np(1&minus;p)</div><div class="fdesc">Valid when np &ge; 5, n(1&minus;p) &ge; 5.</div></div>
+            <div class="fp-item"><div class="fname">Continuity correction</div><div class="fform">P(X = k) &asymp; P(k&minus;0.5 &lt; X<sub>N</sub> &lt; k+0.5)</div><div class="fdesc">Improves approximation.</div></div>
+            <div class="fp-item"><div class="fname">P(X &le; k) approx</div><div class="fform">P(X<sub>N</sub> &lt; k + 0.5)</div><div class="fdesc">Lower-tail.</div></div>
+            <div class="fp-item"><div class="fname">P(X &ge; k) approx</div><div class="fform">P(X<sub>N</sub> &gt; k &minus; 0.5)</div><div class="fdesc">Upper-tail.</div></div>
+            <div class="fp-item"><div class="fname">P(a &le; X &le; b) approx</div><div class="fform">P(a&minus;0.5 &lt; X<sub>N</sub> &lt; b+0.5)</div><div class="fdesc">Inclusive bounds.</div></div>
+          </div>
+        </div>
+
+        <div class="fp-chapter" id="fp-ch7">
+          <h3><span class="ch-num">7</span>Sampling Distributions</h3>
+          <div class="fp-grid">
+            <div class="fp-item"><div class="fname">CLT for mean</div><div class="fform">&#772;X &sim; N(&mu;, &sigma;&sup2;/n) for n &ge; 30</div><div class="fdesc">Any population shape.</div></div>
+            <div class="fp-item"><div class="fname">SE of mean</div><div class="fform">&sigma;<sub>&#772;X</sub> = &sigma; / &radic;n</div><div class="fdesc">Standard error of &#772;X.</div></div>
+            <div class="fp-item"><div class="fname">P(&#772;X &lt; c)</div><div class="fform">P(<span class="frac"><span class="num">Z &lt; (c&minus;&mu;)</span><span class="den">(s/&radic;n)</span></span>)</div><div class="fdesc">Use when &sigma; unknown: replace with s.</div></div>
+            <div class="fp-item"><div class="fname">CLT for proportion</div><div class="fform">p&#770; &sim; N(p, p<span class="frac"><span class="num">(1&minus;p)</span><span class="den">n</span></span>) if np, n(1&minus;p) &ge; 5</div><div class="fdesc">Sample proportion approx normal.</div></div>
+            <div class="fp-item"><div class="fname">SE of proportion</div><div class="fform">&sigma;<sub>p&#770;</sub> = &radic;(p<span class="frac"><span class="num">(1&minus;p)</span><span class="den">n</span></span>)</div><div class="fdesc">Standard error of p&#770;.</div></div>
+            <div class="fp-item"><div class="fname">P(p&#770; &lt; k)</div><div class="fform">P(Z &lt; (k&minus;p)/&radic;(p<span class="frac"><span class="num">(1&minus;p)</span><span class="den">n</span></span>))</div><div class="fdesc">Use prior p if known.</div></div>
+            <div class="fp-item"><div class="fname">Sample size for mean</div><div class="fform">n = (<span class="frac"><span class="num">z &middot; s</span><span class="den">E</span></span>)&sup2;</div><div class="fdesc">z = z<sub>&alpha;/2</sub> for confidence.</div></div>
+            <div class="fp-item"><div class="fname">Sample size for proportion</div><div class="fform">n = z&sup2; &middot; p(1&minus;p) / E&sup2;</div><div class="fdesc">Use p = 0.5 for conservative n.</div></div>
+            <div class="fp-item"><div class="fname">E margin of error</div><div class="fform">E = z<sub><span class="frac"><span class="num">&alpha;</span><span class="den">2</span></span></sub> &middot; (s / &radic;n)</div><div class="fdesc">Half-width of CI.</div></div>
+            <div class="fp-item"><div class="fname">95% z</div><div class="fform">z<sub>0.025</sub> = 1.96</div><div class="fdesc">Most common.</div></div>
+            <div class="fp-item"><div class="fname">99% z</div><div class="fform">z<sub>0.005</sub> = 2.576</div><div class="fdesc">Higher confidence.</div></div>
+            <div class="fp-item"><div class="fname">90% z</div><div class="fform">z<sub>0.05</sub> = 1.645</div><div class="fdesc">Lower confidence.</div></div>
+            <div class="fp-item"><div class="fname">FPC (finite population)</div><div class="fform">SE<sub>adj</sub> = SE &times; &radic;(<span class="frac"><span class="num">(N&minus;n)</span><span class="den">(N&minus;1)</span></span>)</div><div class="fdesc">When n/N &gt; 0.05.</div></div>
+            <div class="fp-item"><div class="fname">Difference of means SE</div><div class="fform">&radic;(&sigma;<sub>1</sub>&sup2;/n<sub>1</sub> + &sigma;<sub>2</sub>&sup2;/n<sub>2</sub>)</div><div class="fdesc">Independent samples.</div></div>
+            <div class="fp-item"><div class="fname">Difference of props SE</div><div class="fform">&radic;(p&#770;<sub>1</sub>q&#770;<span class="frac"><span class="num"><sub>1</sub></span><span class="den">n</span></span><sub>1</sub> + p&#770;<sub>2</sub>q&#770;<span class="frac"><span class="num"><sub>2</sub></span><span class="den">n</span></span><sub>2</sub>)</div><div class="fdesc">Two proportions.</div></div>
+          </div>
+        </div>
+
+        <div class="fp-chapter" id="fp-ch14">
+          <h3><span class="ch-num">14</span>Chi-Square Tests</h3>
+          <div class="fp-grid">
+            <div class="fp-item"><div class="fname">Chi-square statistic</div><div class="fform">&chi;&sup2; = &Sigma;<span class="frac"><span class="num">(O<sub>i</sub> &minus; E<sub>i</sub>)&sup2;</span><span class="den">E<sub>i</sub></span></span></div><div class="fdesc">O = observed, E = expected counts.</div></div>
+            <div class="fp-item"><div class="fname">df &mdash; goodness-of-fit</div><div class="fform">df = k &minus; 1</div><div class="fdesc">k = number of categories.</div></div>
+            <div class="fp-item"><div class="fname">df &mdash; contingency (r &times; c)</div><div class="fform">df = (r &minus; 1)(c &minus; 1)</div><div class="fdesc">r rows, c columns.</div></div>
+            <div class="fp-item"><div class="fname">Expected count</div><div class="fform">E<sub>ij</sub> = <span class="frac"><span class="num">(row total<sub>i</sub>) &times; (col total<sub>j</sub>)</span><span class="den">grand total</span></span></div><div class="fdesc">Under the null of independence.</div></div>
+            <div class="fp-item"><div class="fname">Test of homogeneity df</div><div class="fform">df = (r &minus; 1)(c &minus; 1)</div><div class="fdesc">Same formula as independence.</div></div>
+            <div class="fp-item"><div class="fname">Multinomial test</div><div class="fform">&chi;&sup2; = &Sigma;<span class="frac"><span class="num">(O<sub>i</sub> &minus; E<sub>i</sub>)&sup2;</span><span class="den">E<sub>i</sub></span></span>,  E<sub>i</sub> = n p<sub>i</sub></div><div class="fdesc">k categories, p<sub>i</sub> = hypothesized probability.</div></div>
+            <div class="fp-item"><div class="fname">Rejection rule</div><div class="fform">Reject H<sub>0</sub> if &chi;&sup2; &gt; &chi;&sup2;<sub>&alpha;, df</sub></div><div class="fdesc">Always upper-tail test.</div></div>
+            <div class="fp-item"><div class="fname">Test statistic formula</div><div class="fform">&chi;&sup2; = <span class="frac"><span class="num">n (ad &minus; bc)&sup2;</span><span class="den">(a+b)(c+d)(a+c)(b+d)</span></span></div><div class="fdesc">Shortcut for 2 &times; 2 table only.</div></div>
+            <div class="fp-item"><div class="fname">Continuity correction (2&times;2)</div><div class="fform">|ad &minus; bc| &minus; n/2  in numerator</div><div class="fdesc">Yates' correction &mdash; reduces &chi;&sup2;.</div></div>
+            <div class="fp-item"><div class="fname">Assumptions</div><div class="fform">All E<sub>i</sub> &ge; 5  (combine if smaller)</div><div class="fdesc">Sample of independent observations.</div></div>
+            <div class="fp-item"><div class="fname">Sample size guideline</div><div class="fform">n &ge; 5 &times; df</div><div class="fdesc">Quick rule for adequate expected counts.</div></div>
+            <div class="fp-item"><div class="fname">Critical value (df=1, &alpha;=.05)</div><div class="fform">&chi;&sup2;<sub>0.05, 1</sub> = 3.841</div><div class="fdesc">Most common.</div></div>
+            <div class="fp-item"><div class="fname">Critical value (df=2, &alpha;=.05)</div><div class="fform">&chi;&sup2;<sub>0.05, 2</sub> = 5.991</div><div class="fdesc">Common in 2 &times; 3 tables.</div></div>
+            <div class="fp-item"><div class="fname">Critical value (df=3, &alpha;=.05)</div><div class="fform">&chi;&sup2;<sub>0.05, 3</sub> = 7.815</div><div class="fdesc">For 2 &times; 4 or 4 &times; 2.</div></div>
+            <div class="fp-item"><div class="fname">Critical value (df=4, &alpha;=.05)</div><div class="fform">&chi;&sup2;<sub>0.05, 4</sub> = 9.488</div><div class="fdesc">For 2 &times; 5 or 3 &times; 3.</div></div>
+            <div class="fp-item"><div class="fname">Critical value (&alpha;=.01)</div><div class="fform">&chi;&sup2;<sub>0.01, df</sub> from table</div><div class="fdesc">Stricter threshold.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+<script>
+window.onscroll = function(){
+  var btn = document.getElementById('totop');
+  if(btn) btn.style.display = (document.body.scrollTop>400||document.documentElement.scrollTop>400) ? 'block':'none';
+};
+function scrollTop(){window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+<button class="totop" id="totop" onclick="scrollTop()">&uarr;</button>
+<p class="footer-note">Complete formula reference &mdash; use the Master Set for worked examples.</p>
+</body>
+</html>
