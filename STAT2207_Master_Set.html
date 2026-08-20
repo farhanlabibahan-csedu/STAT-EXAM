@@ -3113,19 +3113,16 @@ function openSlide(id, btn){
   var qTitle = btn ? btn.closest('.q-title') : null;
   var qn = qTitle ? qTitle.querySelector('.qn') : null;
   tag.textContent = qn ? qn.textContent.trim().replace(/\s+/g,' ').slice(0,60) : 'Answer';
-  // Scroll q-panel to the clicked question
+  // Remember the current scroll so we can restore it after the panel becomes fixed
   var qPanel = stage ? stage.querySelector('.q-panel') : null;
+  var savedScroll = (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
+  var savedQPanelScroll = qPanel ? qPanel.scrollTop : 0;
+  slideState.savedScroll = savedScroll;
+  slideState.savedQPanelScroll = savedQPanelScroll;
   window.requestAnimationFrame(function(){
     body.scrollTop = 0;
-    if(qPanel && btn){
-      var target = btn.closest('.q-block');
-      if(target){
-        var top = target.offsetTop;
-        qPanel.scrollTop = top - 16;
-      } else {
-        qPanel.scrollTop = 0;
-      }
-    }
+    if(qPanel) qPanel.scrollTop = savedQPanelScroll;
+    window.scrollTo(0, savedScroll);
   });
   ap.classList.add('show');
   stage.classList.add('is-open');
